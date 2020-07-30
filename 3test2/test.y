@@ -11,17 +11,21 @@ struct structmeminfo{
 struct structinfo{
 	char *flleName;
 	unsigned int lineNumber;
-	struct structmeminfo *next;
+	struct structmeminfo *smi;
 };
 
-struct meminfo simpletest(char *name,unsigned int type){	
-
+struct meminfo * simpletest(char *name,unsigned int type){	
+	struct meminfo *res=(struct meminfo *)malloc(sizeof(struct meminfo));
+	res->name=name;
+	res->type=type;
+	res->next=null;
+	return res;
 }
 %}
 
 %union {
-	struct structmeminfo smi;
-	struct structinfo si;
+	struct structmeminfo *smi;
+	struct structinfo *si;
 	char *word;
 	unsigned int type;
 }
@@ -37,23 +41,22 @@ struct meminfo simpletest(char *name,unsigned int type){
 %type <smi> declareVar statements block
 
 %%
-declareStruct : STRUCT WORD block ';' {};
+declareStruct : STRUCT WORD block ';' { $$=null;printf("struct %s is defined",$3.name);};
 block : '{' statements '}' {} ;
 statements : declareVar {}
 	   | statements statements {};
-declareVar : type WORD ';' {}
+declareVar : type WORD ';' { $$=simpletest($2,$1);}
 	   | type '*' WORD ';'{}
 	   | STRUCT WORD WORD ';' {}
 	   | STRUCT block WORD ';' {};
-type : INT { $$.type=$1.type; }
-     | CONST { $$.type=$1.type; }
-     | LONG { $$.type=$1.type; }
-     | VOID { $$.type=$1.type; } 
-     | type type { $$.type=$1.type|$2.type };
+type : INT { $$=$1; }
+     | CONST { $$=$1; }
+     | LONG { $$=$1; }
+     | VOID { $$=$1; } 
+     | type type { $$=$1|$2 };
 
 %%
 
 int main(){
-	yylex();
-	return 0;
+	return yyparse();
 }
