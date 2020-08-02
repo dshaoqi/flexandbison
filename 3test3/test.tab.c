@@ -70,28 +70,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <malloc.h>
+#include "test.h"
+#include "test.tab.h"
 extern int yylineno;
-struct structmeminfo{
-	char *name;
-	unsigned int type;
-	struct structmeminfo *next;
-};
 
-struct structinfo{
-	char *flleName;
-	unsigned int lineNumber;
-	struct structmeminfo *smi;
-};
-
-struct meminfo * simpletest(char *name,unsigned int type){	
-	struct meminfo *res=(struct meminfo *)malloc(sizeof(struct meminfo));
-	res->name=name;
-	res->type=type;
-	res->next=NULL;
-	return res;
-}
-
-#line 95 "test.tab.c"
+#line 79 "test.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -153,14 +137,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 26 "test.y"
+#line 10 "test.y"
 
 	struct structmeminfo *smi;
 	struct structinfo *si;
 	char *word;
 	unsigned int type;
 
-#line 164 "test.tab.c"
+#line 148 "test.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -536,8 +520,8 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    44,    44,    45,    46,    47,    48,    49,    50,    51,
-      52,    53,    54,    55,    56
+       0,    28,    28,    29,    30,    31,    32,    33,    34,    35,
+      36,    37,    38,    39,    40
 };
 #endif
 
@@ -1340,85 +1324,85 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 44 "test.y"
+#line 28 "test.y"
                                       { (yyval.si)=NULL;printf("struct %s is defined",(yyvsp[-1].smi)->name);}
-#line 1346 "test.tab.c"
+#line 1330 "test.tab.c"
     break;
 
   case 3:
-#line 45 "test.y"
+#line 29 "test.y"
                            {}
-#line 1352 "test.tab.c"
+#line 1336 "test.tab.c"
     break;
 
   case 4:
-#line 46 "test.y"
+#line 30 "test.y"
                         {}
-#line 1358 "test.tab.c"
+#line 1342 "test.tab.c"
     break;
 
   case 5:
-#line 47 "test.y"
+#line 31 "test.y"
                                    {}
-#line 1364 "test.tab.c"
+#line 1348 "test.tab.c"
     break;
 
   case 6:
-#line 48 "test.y"
-                           { (yyval.smi)=simpletest((yyvsp[-1].word)->name,(yyvsp[-2].type));}
-#line 1370 "test.tab.c"
+#line 32 "test.y"
+                           { (yyval.smi)=simpletest((yyvsp[-1].word),(yyvsp[-2].type));}
+#line 1354 "test.tab.c"
     break;
 
   case 7:
-#line 49 "test.y"
+#line 33 "test.y"
                               {}
-#line 1376 "test.tab.c"
+#line 1360 "test.tab.c"
     break;
 
   case 8:
-#line 50 "test.y"
+#line 34 "test.y"
                                   {}
-#line 1382 "test.tab.c"
+#line 1366 "test.tab.c"
     break;
 
   case 9:
-#line 51 "test.y"
+#line 35 "test.y"
                                    {}
-#line 1388 "test.tab.c"
+#line 1372 "test.tab.c"
     break;
 
   case 10:
-#line 52 "test.y"
+#line 36 "test.y"
            { (yyval.type)=(yyvsp[0].type); }
-#line 1394 "test.tab.c"
+#line 1378 "test.tab.c"
     break;
 
   case 11:
-#line 53 "test.y"
+#line 37 "test.y"
              { (yyval.type)=(yyvsp[0].type); }
-#line 1400 "test.tab.c"
+#line 1384 "test.tab.c"
     break;
 
   case 12:
-#line 54 "test.y"
+#line 38 "test.y"
             { (yyval.type)=(yyvsp[0].type); }
-#line 1406 "test.tab.c"
+#line 1390 "test.tab.c"
     break;
 
   case 13:
-#line 55 "test.y"
+#line 39 "test.y"
             { (yyval.type)=(yyvsp[0].type); }
-#line 1412 "test.tab.c"
+#line 1396 "test.tab.c"
     break;
 
   case 14:
-#line 56 "test.y"
+#line 40 "test.y"
                  { (yyval.type)=(yyvsp[-1].type)|(yyvsp[0].type); }
-#line 1418 "test.tab.c"
+#line 1402 "test.tab.c"
     break;
 
 
-#line 1422 "test.tab.c"
+#line 1406 "test.tab.c"
 
       default: break;
     }
@@ -1650,7 +1634,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 58 "test.y"
+#line 42 "test.y"
 
 
 int main(){
