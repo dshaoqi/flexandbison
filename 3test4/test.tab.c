@@ -70,28 +70,23 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <malloc.h>
+#include "test.h"
+int yylex();
+void yyerror(const char *s){
+	fprintf(stderr,"%s\n",s);
+}
 extern int yylineno;
-struct structmeminfo{
-	char *name;
-	unsigned int type;
-	struct structmeminfo *next;
-};
-
-struct structinfo{
-	char *flleName;
-	unsigned int lineNumber;
-	struct structmeminfo *smi;
-};
-
-struct meminfo * simpletest(char *name,unsigned int type){	
-	struct meminfo *res=(struct meminfo *)malloc(sizeof(struct meminfo));
-	res->name=name;
-	res->type=type;
-	res->next=NULL;
-	return res;
+struct structmeminfo * simpletest(char *name,unsigned int type){
+        struct structmeminfo *res=(struct structmeminfo *)malloc(sizeof(struct structmeminfo));
+        res->name=name;
+        res->type=type;
+        res->next=NULL;
+        return res;
 }
 
-#line 95 "test.tab.c"
+
+#line 90 "test.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -153,14 +148,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 26 "test.y"
+#line 21 "test.y"
 
 	struct structmeminfo *smi;
 	struct structinfo *si;
 	char *word;
 	unsigned int type;
 
-#line 164 "test.tab.c"
+#line 159 "test.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -536,8 +531,8 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    44,    44,    45,    46,    47,    48,    49,    50,    51,
-      52,    53,    54,    55,    56
+       0,    39,    39,    40,    41,    42,    43,    44,    45,    46,
+      47,    48,    49,    50,    51
 };
 #endif
 
@@ -1340,85 +1335,85 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 44 "test.y"
+#line 39 "test.y"
                                       { (yyval.si)=NULL;printf("struct %s is defined",(yyvsp[-1].smi)->name);}
-#line 1346 "test.tab.c"
+#line 1341 "test.tab.c"
     break;
 
   case 3:
-#line 45 "test.y"
+#line 40 "test.y"
                            {}
-#line 1352 "test.tab.c"
+#line 1347 "test.tab.c"
     break;
 
   case 4:
-#line 46 "test.y"
+#line 41 "test.y"
                         {}
-#line 1358 "test.tab.c"
+#line 1353 "test.tab.c"
     break;
 
   case 5:
-#line 47 "test.y"
+#line 42 "test.y"
                                    {}
-#line 1364 "test.tab.c"
+#line 1359 "test.tab.c"
     break;
 
   case 6:
-#line 48 "test.y"
-                           { (yyval.smi)=simpletest((yyvsp[-1].word)->name,(yyvsp[-2].type));}
-#line 1370 "test.tab.c"
+#line 43 "test.y"
+                           { (yyval.smi)=simpletest((yyvsp[-1].word),(yyvsp[-2].type));}
+#line 1365 "test.tab.c"
     break;
 
   case 7:
-#line 49 "test.y"
+#line 44 "test.y"
                               {}
-#line 1376 "test.tab.c"
+#line 1371 "test.tab.c"
     break;
 
   case 8:
-#line 50 "test.y"
+#line 45 "test.y"
                                   {}
-#line 1382 "test.tab.c"
+#line 1377 "test.tab.c"
     break;
 
   case 9:
-#line 51 "test.y"
+#line 46 "test.y"
                                    {}
-#line 1388 "test.tab.c"
+#line 1383 "test.tab.c"
     break;
 
   case 10:
-#line 52 "test.y"
+#line 47 "test.y"
            { (yyval.type)=(yyvsp[0].type); }
-#line 1394 "test.tab.c"
+#line 1389 "test.tab.c"
     break;
 
   case 11:
-#line 53 "test.y"
+#line 48 "test.y"
              { (yyval.type)=(yyvsp[0].type); }
-#line 1400 "test.tab.c"
+#line 1395 "test.tab.c"
     break;
 
   case 12:
-#line 54 "test.y"
+#line 49 "test.y"
             { (yyval.type)=(yyvsp[0].type); }
-#line 1406 "test.tab.c"
+#line 1401 "test.tab.c"
     break;
 
   case 13:
-#line 55 "test.y"
+#line 50 "test.y"
             { (yyval.type)=(yyvsp[0].type); }
-#line 1412 "test.tab.c"
+#line 1407 "test.tab.c"
     break;
 
   case 14:
-#line 56 "test.y"
+#line 51 "test.y"
                  { (yyval.type)=(yyvsp[-1].type)|(yyvsp[0].type); }
-#line 1418 "test.tab.c"
+#line 1413 "test.tab.c"
     break;
 
 
-#line 1422 "test.tab.c"
+#line 1417 "test.tab.c"
 
       default: break;
     }
@@ -1650,7 +1645,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 58 "test.y"
+#line 53 "test.y"
 
 
 int main(){

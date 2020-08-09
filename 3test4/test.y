@@ -1,26 +1,21 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-extern int yylineno;
-struct structmeminfo{
-	char *name;
-	unsigned int type;
-	struct structmeminfo *next;
-};
-
-struct structinfo{
-	char *flleName;
-	unsigned int lineNumber;
-	struct structmeminfo *smi;
-};
-
-struct meminfo * simpletest(char *name,unsigned int type){	
-	struct meminfo *res=(struct meminfo *)malloc(sizeof(struct meminfo));
-	res->name=name;
-	res->type=type;
-	res->next=NULL;
-	return res;
+#include <malloc.h>
+#include "test.h"
+int yylex();
+void yyerror(const char *s){
+	fprintf(stderr,"%s\n",s);
 }
+extern int yylineno;
+struct structmeminfo * simpletest(char *name,unsigned int type){
+        struct structmeminfo *res=(struct structmeminfo *)malloc(sizeof(struct structmeminfo));
+        res->name=name;
+        res->type=type;
+        res->next=NULL;
+        return res;
+}
+
 %}
 
 %union {
@@ -45,7 +40,7 @@ declareStruct : STRUCT WORD block ';' { $$=NULL;printf("struct %s is defined",$3
 block : '{' statements '}' {} ;
 statements : declareVar {}
 	   | statements declareVar {};
-declareVar : type WORD ';' { $$=simpletest($2->name,$1);}
+declareVar : type WORD ';' { $$=simpletest($2,$1);}
 	   | type '*' WORD ';'{}
 	   | STRUCT WORD WORD ';' {}
 	   | STRUCT block WORD ';' {};

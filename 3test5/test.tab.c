@@ -70,20 +70,23 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <malloc.h>
+#include "test.h"
+int yylex();
+void yyerror(const char *s){
+	fprintf(stderr,"%s\n",s);
+}
 extern int yylineno;
-struct structmeminfo{
-	char *name;
-	unsigned int type;
-	struct structmeminfo *next;
-};
+struct structmeminfo * simpletest(char *name,unsigned int type){
+        struct structmeminfo *res=(struct structmeminfo *)malloc(sizeof(struct structmeminfo));
+        res->name=name;
+        res->type=type;
+        res->next=NULL;
+        return res;
+}
 
-struct structinfo{
-	char *flleName;
-	unsigned int lineNumber;
-	struct structmeminfo *next;
-};
 
-#line 87 "test.tab.c"
+#line 90 "test.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -145,14 +148,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 18 "test.y"
+#line 21 "test.y"
 
-	struct structmeminfo smi;
-	struct structinfo si;
+	struct structmeminfo *smi;
+	struct structinfo *si;
 	char *word;
 	unsigned int type;
 
-#line 156 "test.tab.c"
+#line 159 "test.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -471,7 +474,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  4
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   38
+#define YYLAST   40
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  14
@@ -528,8 +531,8 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    35,    35,    36,    37,    38,    39,    40,    41,    42,
-      43,    44,    45,    46,    47
+       0,    39,    39,    40,    41,    42,    43,    44,    45,    46,
+      47,    48,    49,    50,    51
 };
 #endif
 
@@ -569,7 +572,7 @@ static const yytype_int16 yytoknum[] =
 static const yytype_int8 yypact[] =
 {
       -1,    -2,    22,    15,    -9,    12,    20,    18,    -9,    -9,
-      -9,    -9,    -3,    -9,     4,    -9,    19,    23,    -9,    12,
+      -9,    -9,    -3,    -9,     4,    -9,    19,    23,    -9,    -9,
       21,    24,    17,    25,    26,    -9,    27,    -9,    -9,    -9
 };
 
@@ -586,13 +589,13 @@ static const yytype_int8 yydefact[] =
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -9,    -9,    31,    29,    -9,    -8
+      -9,    -9,    31,    -9,    28,    -8
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     2,     6,    19,    13,    14
+      -1,     2,     6,    12,    13,    14
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -603,7 +606,8 @@ static const yytype_int8 yytable[] =
        7,     8,     1,     9,    10,    11,    22,     3,     8,    18,
        9,    10,    11,    20,    22,     7,     8,    21,     9,    10,
       11,     8,     4,     9,    10,    11,     5,    16,    23,     5,
-      15,    25,    24,    26,    12,    27,    28,    29,    17
+      15,    25,    24,    26,     0,    27,    28,    29,    17,     0,
+      19
 };
 
 static const yytype_int8 yycheck[] =
@@ -611,7 +615,8 @@ static const yytype_int8 yycheck[] =
        3,     4,     3,     6,     7,     8,    14,     9,     4,    12,
        6,     7,     8,     9,    22,     3,     4,    13,     6,     7,
        8,     4,     0,     6,     7,     8,    11,     9,     9,    11,
-      10,    10,     9,     9,     5,    10,    10,    10,     7
+      10,    10,     9,     9,    -1,    10,    10,    10,     7,    -1,
+      12
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -619,7 +624,7 @@ static const yytype_int8 yycheck[] =
 static const yytype_int8 yystos[] =
 {
        0,     3,    15,     9,     0,    11,    16,     3,     4,     6,
-       7,     8,    17,    18,    19,    10,     9,    16,    12,    17,
+       7,     8,    17,    18,    19,    10,     9,    16,    12,    18,
        9,    13,    19,     9,     9,    10,     9,    10,    10,    10
 };
 
@@ -1330,85 +1335,85 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 35 "test.y"
-                                      {}
-#line 1336 "test.tab.c"
+#line 39 "test.y"
+                                      { printf("declarStruct rule 1\n");(yyval.si)=NULL;}
+#line 1341 "test.tab.c"
     break;
 
   case 3:
-#line 36 "test.y"
-                           {}
-#line 1342 "test.tab.c"
+#line 40 "test.y"
+                           {printf("block rule 1\n");}
+#line 1347 "test.tab.c"
     break;
 
   case 4:
-#line 37 "test.y"
-                        {}
-#line 1348 "test.tab.c"
+#line 41 "test.y"
+                        {printf("statements rule 1\n");}
+#line 1353 "test.tab.c"
     break;
 
   case 5:
-#line 38 "test.y"
+#line 42 "test.y"
                                    {}
-#line 1354 "test.tab.c"
+#line 1359 "test.tab.c"
     break;
 
   case 6:
-#line 39 "test.y"
-                           {}
-#line 1360 "test.tab.c"
+#line 43 "test.y"
+                           { printf("declareVar rule 1\n");(yyval.smi)=simpletest((yyvsp[-1].word),(yyvsp[-2].type)); }
+#line 1365 "test.tab.c"
     break;
 
   case 7:
-#line 40 "test.y"
+#line 44 "test.y"
                               {}
-#line 1366 "test.tab.c"
+#line 1371 "test.tab.c"
     break;
 
   case 8:
-#line 41 "test.y"
+#line 45 "test.y"
                                   {}
-#line 1372 "test.tab.c"
+#line 1377 "test.tab.c"
     break;
 
   case 9:
-#line 42 "test.y"
+#line 46 "test.y"
                                    {}
-#line 1378 "test.tab.c"
+#line 1383 "test.tab.c"
     break;
 
   case 10:
-#line 43 "test.y"
-           {}
-#line 1384 "test.tab.c"
+#line 47 "test.y"
+           { printf("INT to TYPE\n");(yyval.type)=(yyvsp[0].type);printf("$$=%d\n",(yyval.type)); }
+#line 1389 "test.tab.c"
     break;
 
   case 11:
-#line 44 "test.y"
-             {}
-#line 1390 "test.tab.c"
+#line 48 "test.y"
+             { (yyval.type)=(yyvsp[0].type); }
+#line 1395 "test.tab.c"
     break;
 
   case 12:
-#line 45 "test.y"
-            {}
-#line 1396 "test.tab.c"
+#line 49 "test.y"
+            { (yyval.type)=(yyvsp[0].type); }
+#line 1401 "test.tab.c"
     break;
 
   case 13:
-#line 46 "test.y"
-            {}
-#line 1402 "test.tab.c"
+#line 50 "test.y"
+            { (yyval.type)=(yyvsp[0].type); }
+#line 1407 "test.tab.c"
     break;
 
   case 14:
-#line 47 "test.y"
-                 {}
-#line 1408 "test.tab.c"
+#line 51 "test.y"
+                 { (yyval.type)=(yyvsp[-1].type)|(yyvsp[0].type); }
+#line 1413 "test.tab.c"
     break;
 
 
-#line 1412 "test.tab.c"
+#line 1417 "test.tab.c"
 
       default: break;
     }
@@ -1640,21 +1645,9 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 49 "test.y"
+#line 53 "test.y"
 
-
-struct wordExistInfo{
-	char *filePath;
-	unsigned int *lineNumber;
-};
-
-struct word{
-	char *value;
-	char *defFilePath;
-	struct wordExistinfo *earray;
-};
 
 int main(){
-	yylex();
-	return 0;
+	return yyparse();
 }

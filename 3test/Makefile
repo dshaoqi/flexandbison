@@ -1,4 +1,0 @@
-a.out : test.l test.y
-	bison -d test.y
-	flex test.l
-	gcc lex.yy.c -lfl

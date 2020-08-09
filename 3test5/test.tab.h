@@ -63,7 +63,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 26 "test.y"
+#line 21 "test.y"
 
 	struct structmeminfo *smi;
 	struct structinfo *si;
